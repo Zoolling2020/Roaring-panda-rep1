@@ -1,0 +1,18 @@
+```javascript
+async function main() {
+  const [deployer] = await ethers.getSigners();
+
+  console.log("Deploying contracts with the account:", deployer.address);
+
+  const CoinMaldives = await ethers.getContractFactory("CoinMaldives");
+  const coinMaldives = await CoinMaldives.deploy();
+
+  console.log("Coin Maldives deployed to:", coinMaldives.address);
+}
+
+main()
+  .then(() => process.exit(0))
+  .catch(error => {
+    console.error(error);
+    process.exit(1);
+  });
