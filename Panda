@@ -1,0 +1,33 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+contract CoinMaldives is ERC20, Ownable {
+    // Social media links
+    string public website;
+    string public twitter;
+    string public telegram;
+
+    constructor() ERC20("Coin Maldives", "CMD") {
+        _mint(msg.sender, 1000000000 * 10 ** decimals()); // Mint the total supply to the owner
+    }
+
+    // Function to update social media links by the owner
+    function setSocialLinks(string memory _website, string memory _twitter, string memory _telegram) public onlyOwner {
+        website = _website;
+        twitter = _twitter;
+        telegram = _telegram;
+    }
+
+    // Function to renounce ownership
+    function renounceOwnership() public override onlyOwner {
+        _transferOwnership(address(0));
+    }
+
+    // Disabling minting function
+    function _mint(address account, uint256 amount) internal override onlyOwner {
+        revert("Minting is disabled");
+    }
+}
